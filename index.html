@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WP Developer Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arima&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Protest+Guerrilla&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="particles"></canvas>
+    <header class="hero-section">
+        <div class="hero-content">
+            <h1>Hi, I am <span class="highlight">Eman Fatima</span></h1>
+            <h2>Aspiring Web Developer</h2>
+            <p>I know how to design and develop websites.</p>
+            <p>Contact me for the best experience.</p>
+            <div class="buttons">
+                <a href="Eman fatima.pdf" class="btn btn-outline">Download Resume</a>
+                <a href="https://www.linkedin.com/in/eman-fatima-b128aa331?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="btn btn-primary">LinkedIn</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="services">
+        <h2>My Services</h2>
+        <div class="service-cards">
+            <div class="card">
+                <img src="download (2).jpeg" alt="Development">
+                <h3>Custom Websites</h3>
+                <p>We provide modern and scalable solutions for all your development needs.</p>
+            </div>
+            <div class="card">
+                <img src="download.jpeg" alt="Design">
+                <h3>E-commerce Websites</h3>
+                <p>Creative design solutions that make your brand stand out in the market.</p>
+            </div>
+            <div class="card">
+                <img src="images.jpeg" alt="SEO">
+                <h3>AI Integrated Websites</h3>
+                <p>Optimize your website to rank better and attract more visitors organically.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="portfolio">
+        <h2>My Projects</h2>
+        <div class="portfolio-filters">
+            <button class="filter-btn active">All</button>
+            <button class="filter-btn">Netflix Clone</button>
+            <button class="filter-btn">AI Text Detector App</button>
+            <button class="filter-btn">E-Shop Website</button>
+        </div>
+        <div class="portfolio-gallery">
+            <div class="gallery-item">
+                <img src="netflix bg.jpg" alt="Portfolio 1">
+                <a href="https://coruscating-croquembouche-cbd8c9.netlify.app" class="see-work">See Work</a>
+            </div>
+            <div class="gallery-item">
+                <img src="AIintegrated.png" alt="AI Integrated App">
+                <a href="https://huggingface.co/spaces/EmanFatima786/AIdetector" class="see-work">See Work</a>
+            </div>
+            <div class="gallery-item">
+                <img src="ecommerce.png" alt="E-commerce Site">
+                <a href="https://the-islamic-treasure-online-store.netlify.app/" class="see-work">See Work</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact">
+        <h2>Contact Me</h2>
+        <div class="form-container">
+            <form id="contactForm">
+                <div class="form-group">
+                    <input type="text" id="name" name="name" required>
+                    <label for="name">Name</label>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" name="email" required>
+                    <label for="email">Email</label>
+                </div>
+                <div class="form-group">
+                    <textarea id="message" name="message" required></textarea>
+                    <label for="message">Your Note</label>
+                </div>
+                <button class="send-button">
+                    Send Message
+                    <span class="icon">&#10148;</span>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Eman Fatima. All rights reserved.</p>
+            <ul class="footer-links">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="https://www.linkedin.com/in/eman-fatima-b128aa331?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">Contact Me</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script>
+        // Optional JS for interactive behavior
+        document.querySelector('.btn-primary').addEventListener('click', () => {
+            alert('More info coming soon!');
+        });
+
+        // Portfolio filter buttons interaction
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                alert(`Showing: ${button.innerText}`);
+            });
+        });
+
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            fetch('http://localhost:3000/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, email, message }),
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert('Message sent successfully!');
+                document.getElementById('contactForm').reset();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Failed to send message.');
+            });
+        });
+        const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particlesArray = [];
+
+class Particle {
+    constructor(x, y, directionX, directionY, size, color) {
+        this.x = x;
+        this.y = y;
+        this.directionX = directionX;
+        this.directionY = directionY;
+        this.size = size;
+        this.color = color;
+    }
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }
+    update() {
+        if (this.x + this.size > canvas.width || this.x - this.size < 0) {
+            this.directionX = -this.directionX;
+        }
+        if (this.y + this.size > canvas.height || this.y - this.size < 0) {
+            this.directionY = -this.directionY;
+        }
+        this.x += this.directionX;
+        this.y += this.directionY;
+        this.draw();
+    }
+}
+
+function init() {
+    particlesArray = [];
+    let numberOfParticles = (canvas.height * canvas.width) / 9000;
+    for (let i = 0; i < numberOfParticles; i++) {
+        let size = Math.random() * 5 + 1;
+        let x = Math.random() * (canvas.width - size * 2) + size;
+        let y = Math.random() * (canvas.height - size * 2) + size;
+        let directionX = Math.random() * 0.4 - 0.2;
+        let directionY = Math.random() * 0.4 - 0.2;
+        let color = '#00ff00';
+        particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+    }
+}
+
+function animate() {
+    requestAnimationFrame(animate);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+    }
+}
+
+init();
+animate();
+
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    init();
+});
+    </script>
+</body>
+</html>
